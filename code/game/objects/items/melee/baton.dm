@@ -190,7 +190,6 @@
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
-		target.LAssailant = WEAKREF(user)
 		if(log_stun_attack)
 			log_combat(user, target, "stun attacked", src)
 	if(baton_effect(target, user, modifiers) && user)
@@ -213,6 +212,7 @@
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
+	SEND_SIGNAL(target, COMSIG_MOB_BATONED, user, src)
 	return TRUE
 
 /// Description for trying to stun when still on cooldown.
@@ -437,7 +437,7 @@
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = STANDARD_CELL_CHARGE
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -660,7 +660,7 @@
 	if (!cell)
 		return
 	if (!(. & EMP_PROTECT_SELF))
-		deductcharge(1000 / severity)
+		deductcharge(STANDARD_CELL_CHARGE / severity)
 	if (cell.charge >= cell_hit_cost)
 		var/scramble_time
 		scramble_mode()
@@ -694,7 +694,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
-	cell_hit_cost = 2000
+	cell_hit_cost = STANDARD_CELL_CHARGE * 2
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
@@ -758,7 +758,7 @@
 	force = 5
 	throwforce = 5
 	throw_range = 5
-	cell_hit_cost = 2000
+	cell_hit_cost = STANDARD_CELL_CHARGE * 2
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)

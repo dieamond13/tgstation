@@ -524,12 +524,17 @@
 			generated_lizard_color = "#66ff33"
 
 		// Set our greyscale colors to the lizard color we made + black eyes
-		set_greyscale(colors = list(generated_lizard_color, "#000000"))
+		set_greyscale(colors = list(generated_lizard_color, COLOR_BLACK))
 
 // Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
+
+/obj/item/toy/plush/lizard_plushie/greyscale
+	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	greyscale_colors = "#d3d3d3#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"

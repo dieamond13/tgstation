@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms += src
 	update_appearance()
 	find_and_hang_on_wall()
+	register_context()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
@@ -489,6 +490,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("disconnect_sensor")
 			if(allow_link_change)
 				disconnect_sensor()
+
+		if ("lock")
+			togglelock(usr)
+			return TRUE
 
 	update_appearance()
 
